@@ -30,7 +30,7 @@ from mininet.log import info, setLogLevel
 from mininet.net import Mininet
 from mininet.node import Switch
 
-PROGRAM = "tunnel.p4"
+PROGRAM = "tunnel_v1.p4"
 BUILD = "build/tunnel.json"
 THRIFT_PORT = {"s1": 9090, "s2": 9091}
 # The compiled program each switch runs. Normally both run tunnel.p4; --s2-program changes s2's.

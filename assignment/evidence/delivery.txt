@@ -1,0 +1,7 @@
+== h2 ==
+Listening on h2-eth0...
+Received (tunnelled, dst_id=2, hop_limit=6) from 10.99.0.1 to 10.99.0.2, TTL 64: 'to h2'
+Received (plain IPv4) from 10.99.0.1 to 10.99.0.2, TTL 62: 'plain ipv4'
+== h3 ==
+Listening on h3-eth0...
+Received (tunnelled, dst_id=3, hop_limit=6) from 10.99.0.1 to 10.99.0.3, TTL 64: 'to h3'
