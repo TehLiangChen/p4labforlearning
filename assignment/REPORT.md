@@ -21,6 +21,12 @@ Decrementing the TLL wont stop the loop because there is not yet drop logic when
      - the starting value send.py uses, and how you chose it;
      - where it's decremented, and what happens when it runs out;
      - what else had to change for every part of the path to agree (parser, deparser, hosts). -->
+8 bit for the field size which is the same with ipv4 TTL that allows up to 255 hops and also to keep the headers be a whole number of bytes. It is placed last in the header so the parser that work on proto_id no need to change
+
+8 is choose as the starting value because it is sligthly longer than longest path in the lab topology. So a legitimate packets wont drop by mistake and it is small enough to discard a packet stuck in loop immediately. And i like the number 8 :D
+
+It is decremented inside myTunnel_forward, when it is run out the packet will be drop.
+Parser and deparser no need change since just header is modified. Just that sender now need to send total 5 bytes.
 
 ## 3. Implementation
 

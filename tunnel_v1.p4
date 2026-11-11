@@ -25,6 +25,7 @@ header ethernet_t {
 header myTunnel_t {
     bit<16> proto_id;   // what follows the tunnel header, like etherType (0x0800: IPv4)
     bit<16> dst_id;     // which tunnel exit to deliver to: 1 = h1, 2 = h2, 3 = h3
+    bit<8>  hop_limit;  // how many more hop it mmay need
 }
 
 header ipv4_t {
@@ -110,6 +111,7 @@ control MyIngress(inout headers hdr,
 
     action myTunnel_forward(egressSpec_t port) {
         standard_metadata.egress_spec = port;
+        hdr.myTunnel.hop_limit = hdr.myTunnel.hop_limit - 1;
     }
 
     table myTunnel_exact {
@@ -121,9 +123,12 @@ control MyIngress(inout headers hdr,
 
     apply {
         if (hdr.myTunnel.isValid()) {
-        myTunnel_exact.apply();
-        }
-        else if (hdr.ipv4.isValid()) {
+            if (hdr.myTunnel.hop_limit == 0) {
+                drop();                      // drop if no hop
+            } else {
+                myTunnel_exact.apply();      
+            }
+        } else if (hdr.ipv4.isValid()) {
             ipv4_lpm.apply();
         } else {
             drop();
