@@ -6,11 +6,13 @@ Write each section in your own words, about your own runs. Quote the evidence fi
 `assignment/evidence/` that support each point. Delete the instructions in `<!-- -->` as you go.
 
 ## 1. Analysis: the loop
-
 <!-- How did you create the tunnel loop (which entry, on which switch, which commands)?
      What did the switch logs show over time, with numbers from loop-before.txt?
      Then look at the IPv4 path in tunnel.p4: it decrements the TTL. Does that stop an IPv4
      loop in this program? Check the code, and explain what happens when TTL reaches 0. -->
+By modifying the entry 2 which suppose to forward the frame out of port 3, i change it to forward back to port 1 which is the entry port from s1, causing the packet loop between s1 and s2.
+The switch log show spike of packet number increase within just 5 seconds from 500+ to 1500+ packets.
+Decrementing the TLL wont stop the loop because there is not yet drop logic when TTL reach 0.
 
 ## 2. Design: the hop limit
 
